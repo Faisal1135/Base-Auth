@@ -1,11 +1,14 @@
 // import 'package:dio/dio.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:base_auth/base_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// class AuthRepository<T> {
-//   final String baseUrl;
-//   final Reader reader;
+class AuthRepository<T> {
+  final Reader reader;
 
-//   const AuthRepository({required this.baseUrl, required this.reader});
+  const AuthRepository({required this.reader});
 
-//   Dio get authDio => Dio(BaseOptions(baseUrl: this.baseUrl));
-// }
+  Future<void> setAuthUser(BaseUser user, BuildContext context) {
+    return context.read(userNotiferProvider.notifier).saveUserInPref(user);
+  }
+}

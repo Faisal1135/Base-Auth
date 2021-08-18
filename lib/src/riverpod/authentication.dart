@@ -24,7 +24,8 @@ final userNotiferProvider = StateNotifierProvider<BaseUserNotifier, BaseUser>(
 
 class BaseUserNotifier extends StateNotifier<BaseUser> {
   BaseUserNotifier(this.reader, [BaseUser? user])
-      : super(user ?? BaseUser(userName: "no user", emailAddress: "no email"));
+      : super(user ??
+            BaseUser(uid: '0', userName: "no user", emailAddress: "no email"));
 
   final Reader reader;
 

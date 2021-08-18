@@ -4,10 +4,10 @@ import 'package:base_auth/base_auth.dart';
 
 class MyUser extends BaseUser {
   final String phoneNumber;
-  final String uid;
+
   const MyUser({
     required this.phoneNumber,
-    required this.uid,
+    required uid,
     String? fristName,
     String? lastName,
     required String userName,
@@ -16,26 +16,28 @@ class MyUser extends BaseUser {
     UserRoles role = UserRoles.Inactive,
     UserStatus status = UserStatus.UnAuth,
   }) : super(
+          uid: uid,
           fristName: fristName,
           lastName: lastName,
           userName: userName,
           emailAddress: emailAddress,
           token: token,
+          phoneNumber: phoneNumber,
           role: role,
         );
 
   @override
-  MyUser copyWith({
-    String? phoneNumber,
-    String? uid,
-    String? fristName,
-    String? lastName,
-    String? userName,
-    String? emailAddress,
-    String? token,
-    UserRoles? role,
-    UserStatus? status,
-  }) {
+  MyUser copyWith(
+      {String? fristName,
+      String? lastName,
+      String? userName,
+      String? emailAddress,
+      String? token,
+      UserRoles? role,
+      UserStatus? status,
+      uid,
+      String? phoneNumber,
+      String? imageUrl}) {
     return MyUser(
       uid: uid ?? this.uid,
       phoneNumber: phoneNumber ?? this.phoneNumber,
@@ -48,6 +50,30 @@ class MyUser extends BaseUser {
       status: status ?? this.status,
     );
   }
+
+  // MyUser copyWith({
+  //   String? phoneNumber,
+  //   dynamic uid,
+  //   String? fristName,
+  //   String? lastName,
+  //   String? userName,
+  //   String? emailAddress,
+  //   String? token,
+  //   UserRoles? role,
+  //   UserStatus? status,
+  // }) {
+  // return MyUser(
+  //   uid: uid ?? this.uid,
+  //   phoneNumber: phoneNumber ?? this.phoneNumber,
+  //   fristName: fristName ?? this.fristName,
+  //   lastName: lastName ?? this.lastName,
+  //   userName: userName ?? this.userName,
+  //   emailAddress: emailAddress ?? this.emailAddress,
+  //   token: token ?? this.token,
+  //   role: role ?? this.role,
+  //   status: status ?? this.status,
+  // );
+  // }
 
   @override
   Map<String, dynamic> toMap() {
@@ -124,3 +150,25 @@ class MyUser extends BaseUser {
         status.hashCode;
   }
 }
+
+// import 'package:base_auth/base_auth.dart';
+
+// class MyUser extends BaseUser {
+//   final String adress;
+
+//   MyUser({
+//     required this.adress,
+//     String? fristName,
+//     String? lastName,
+//     uid,
+//     required String userName,
+//     required String emailAddress,
+//     String? token,
+//     String? imageUrl,
+//     String? phoneNumber,
+//   }) : super(
+//           uid: uid,
+//           emailAddress: emailAddress,
+//           userName: userName,
+//         );
+// }

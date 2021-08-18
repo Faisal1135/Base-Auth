@@ -10,19 +10,25 @@ enum UserRoles {
 enum UserStatus { Auth, UnAuth }
 
 class BaseUser {
+  final dynamic uid;
   final String? fristName;
   final String? lastName;
   final String userName;
   final String emailAddress;
+  final String? phoneNumber;
+  final String? imageUrl;
   final String? token;
   final UserRoles role;
   final UserStatus status;
   const BaseUser({
     this.fristName,
     this.lastName,
+    required this.uid,
     required this.userName,
     required this.emailAddress,
     this.token,
+    this.imageUrl,
+    this.phoneNumber,
     this.role = UserRoles.Inactive,
     this.status = UserStatus.UnAuth,
   });
@@ -37,20 +43,29 @@ class BaseUser {
     String? token,
     UserRoles? role,
     UserStatus? status,
+    dynamic uid,
+    String? phoneNumber,
+    String? imageUrl,
   }) {
     return BaseUser(
+      uid: uid ?? this.uid,
       fristName: fristName ?? this.fristName,
       lastName: lastName ?? this.lastName,
       userName: userName ?? this.userName,
       emailAddress: emailAddress ?? this.emailAddress,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      imageUrl: imageUrl ?? this.imageUrl,
       token: token ?? this.token,
       role: role ?? this.role,
       status: status ?? this.status,
     );
   }
 
+  BaseUser makeauthUser(BaseUser user) =>
+      user.copyWith(status: UserStatus.Auth, role: UserRoles.Active);
+
   static BaseUser init() =>
-      BaseUser(userName: "no user", emailAddress: "no email");
+      BaseUser(userName: "no user", emailAddress: "no email", uid: 0);
 
   Map<String, dynamic> toMap() {
     return {
@@ -61,15 +76,21 @@ class BaseUser {
       'token': token,
       'role': role.index,
       'status': status.index,
+      'uid': uid,
+      'phoneNumber': phoneNumber,
+      'imageUrl': imageUrl,
     };
   }
 
   @override
   factory BaseUser.fromMap(Map<String, dynamic> map) {
     return BaseUser(
+      uid: map['uid'],
       fristName: map['fristName'],
       lastName: map['lastName'],
       userName: map['userName'],
+      phoneNumber: map['phoneNumber'],
+      imageUrl: map['imageUrl'],
       emailAddress: map['emailAddress'],
       token: map['token'],
       role: UserRoles.values[map['role']],
@@ -84,7 +105,7 @@ class BaseUser {
 
   @override
   String toString() {
-    return 'BaseUser(fristName: $fristName, lastName: $lastName, userName: $userName, emailAddress: $emailAddress, token: $token, role: $role, status: $status)';
+    return 'BaseUser(uid: $uid ,fristName: $fristName, lastName: $lastName, userName: $userName, emailAddress: $emailAddress, token: $token, role: $role, status: $status,phoneNumber: $phoneNumber , imageUrl: $imageUrl)';
   }
 
   @override

@@ -38,6 +38,7 @@ class LoginPage extends HookWidget {
 
                       final myuser = MyUser.init();
                       final user = BaseUser(
+                          uid: "0",
                           userName: "myusername",
                           emailAddress: formdata["email"]);
                       await context
