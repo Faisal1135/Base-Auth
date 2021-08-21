@@ -11,27 +11,28 @@ class MainPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userStatus = useProvider(authProvider);
-
-    final myuserStatus = useProvider(myuserStateProvider);
-    print(myuserStatus);
-
+    final myuser = useProvider(myuserStateProvider);
     return Scaffold(
-      body: userStatus.maybeWhen(
-        auth: (user) => Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('$user'),
-            Text('$myuserStatus'),
-            TextButton.icon(
-              onPressed: () async {
-                await context.read(userNotiferProvider.notifier).logoutUser();
-              },
-              icon: Icon(Icons.logout),
-              label: Text('logout'),
-            )
-          ],
-        ),
+      body: BaseAuthWidget(
+        auth: (user) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('$user'),
+              SizedBox(
+                height: 30,
+              ),
+              Text('$myuser'),
+              TextButton.icon(
+                onPressed: () async {
+                  AuthRepository.logoutUser(context);
+                },
+                icon: Icon(Icons.logout),
+                label: Text('logout'),
+              )
+            ],
+          );
+        },
         admin: (user) => Text('$user'),
         orElse: () {
           return LoginPage();

@@ -41,16 +41,16 @@ class LoginPage extends HookWidget {
                           uid: "0",
                           userName: "myusername",
                           emailAddress: formdata["email"]);
-                      await context
-                          .read(userNotiferProvider.notifier)
-                          .saveUserInPref(user.copyWith(
-                                  emailAddress: formdata['email'],
-                                  token: formdata['password'],
-                                  status: UserStatus.Auth,
-                                  role: UserRoles.Active)
-                              // user.copyWith(
-                              // status: UserStatus.Auth, role: UserRoles.Active),
-                              );
+                      await AuthRepository.setAuthUser(
+                          user.copyWith(
+                              emailAddress: formdata['email'],
+                              token: formdata['password'],
+                              status: UserStatus.Auth,
+                              role: UserRoles.Active),
+                          context
+                          // user.copyWith(
+                          // status: UserStatus.Auth, role: UserRoles.Active),
+                          );
                       await context
                           .read(myuserStateProvider.notifier)
                           .saveUserInPref(myuser.copyWith(

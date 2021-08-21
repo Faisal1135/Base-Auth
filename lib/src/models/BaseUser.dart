@@ -85,7 +85,7 @@ class BaseUser {
   @override
   factory BaseUser.fromMap(Map<String, dynamic> map) {
     return BaseUser(
-      uid: map['uid'],
+      uid: map['uid'] ?? '0',
       fristName: map['fristName'],
       lastName: map['lastName'],
       userName: map['userName'],

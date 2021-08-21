@@ -10,8 +10,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_hooks: ^0.18.0
   flutter_riverpod: ^0.14.0+3
   freezed_annotation: ^0.14.3
+  hooks_riverpod: ^0.14.0+4
   shared_preferences: ^2.0.6
 
 dev_dependencies:
@@ -22,6 +24,7 @@ dev_dependencies:
 
 dependency_overrides:
   meta: ^1.7.0
+  flutter_hooks: ^0.18.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
