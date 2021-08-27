@@ -36,24 +36,42 @@ class LoginPage extends HookWidget {
                       isLoading.value = !isLoading.value;
                       print(formdata);
 
-                      final myuser = MyUser.init();
-                      final user = BaseUser(
-                          uid: "0",
-                          userName: "myusername",
-                          emailAddress: formdata["email"]);
-                      await AuthRepository.setAuthUser(
-                          user.copyWith(
-                              emailAddress: formdata['email'],
-                              token: formdata['password'],
-                              status: UserStatus.Auth,
-                              role: UserRoles.Active),
-                          context
-                          // user.copyWith(
-                          // status: UserStatus.Auth, role: UserRoles.Active),
-                          );
+                      final hasuser = AuthRepository.preferences(context)
+                          .containsKey("creduser");
+
+                      if (hasuser) {
+                        final userstr = AuthRepository.preferences(context)
+                            .getStringList("creduser")!;
+                        if (userstr.first == formdata['email'] &&
+                            userstr.last == formdata['password']) {
+                          await AuthRepository.setAuthUser(
+                              BaseUser.init().copyWith(
+                                  emailAddress: formdata['email'],
+                                  status: UserStatus.Auth,
+                                  token: 'fning',
+                                  role: UserRoles.Active),
+                              context);
+                        }
+                      }
+
+                      // final myuser = MyUser.init();
+                      // final user = BaseUser(
+                      //     uid: "0",
+                      //     userName: "myusername",
+                      //     emailAddress: formdata["email"]);
+                      // await AuthRepository.setAuthUser(
+                      //     user.copyWith(
+                      //         emailAddress: formdata['email'],
+                      //         token: formdata['password'],
+                      //         status: UserStatus.Auth,
+                      //         role: UserRoles.Active),
+                      //     context
+                      //     // user.copyWith(
+                      //     // status: UserStatus.Auth, role: UserRoles.Active),
+                      //     );
                       await context
                           .read(myuserStateProvider.notifier)
-                          .saveUserInPref(myuser.copyWith(
+                          .saveUserInPref(MyUser.init().copyWith(
                               emailAddress: formdata['email'],
                               token: formdata['password'],
                               status: UserStatus.Auth,

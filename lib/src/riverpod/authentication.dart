@@ -1,3 +1,4 @@
+import 'package:base_auth/src/constant.dart';
 import 'package:base_auth/src/models/BaseUser.dart';
 import 'package:base_auth/src/models/absBase.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,10 +11,10 @@ final sharedPrefProvider = Provider<SharedPreferences>((ref) {
 final userNotiferProvider = StateNotifierProvider<BaseUserNotifier, BaseUser>(
   (ref) {
     final pref = ref.read(sharedPrefProvider);
-    final hasUser = pref.containsKey("user");
+    final hasUser = pref.containsKey(kuserKey);
     print(hasUser);
     if (hasUser) {
-      final userfromPref = pref.getString("user")!;
+      final userfromPref = pref.getString(kuserKey)!;
       print(userfromPref);
       final user = BaseUser.fromJson(userfromPref);
       return BaseUserNotifier(ref.read, user);
@@ -40,7 +41,7 @@ class BaseUserNotifier extends StateNotifier<BaseUser> {
   Future<void> saveUserInPref(BaseUser user) async {
     try {
       final pref = reader(sharedPrefProvider);
-      await pref.setString("user", user.toJson());
+      await pref.setString(kuserKey, user.toJson());
       await pref.setBool("isAuth", true);
       await pref.setString("token", "mytoken");
       state = user;
@@ -51,7 +52,9 @@ class BaseUserNotifier extends StateNotifier<BaseUser> {
 
   Future<void> logoutUser() async {
     final pref = reader(sharedPrefProvider);
-    await pref.clear();
+    await pref.remove(kuserKey);
+    await pref.remove('isAuth');
+    await pref.remove('token');
     state = BaseUser.init();
   }
 }

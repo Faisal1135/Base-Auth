@@ -35,6 +35,9 @@ class BaseUser {
 
   bool get isAuth => this.status == UserStatus.Auth;
 
+  BaseUser get toAuth =>
+      this.copyWith(status: UserStatus.Auth, role: UserRoles.Active);
+
   BaseUser copyWith({
     String? fristName,
     String? lastName,
@@ -64,8 +67,10 @@ class BaseUser {
   BaseUser makeauthUser(BaseUser user) =>
       user.copyWith(status: UserStatus.Auth, role: UserRoles.Active);
 
-  static BaseUser init() =>
-      BaseUser(userName: "no user", emailAddress: "no email", uid: 0);
+  static BaseUser init() => BaseUser(
+      userName: "no user",
+      emailAddress: "no email",
+      uid: DateTime.now().microsecondsSinceEpoch);
 
   Map<String, dynamic> toMap() {
     return {

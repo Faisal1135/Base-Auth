@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:base_auth/base_auth.dart';
 
 class MyUser extends BaseUser {
@@ -49,6 +48,14 @@ class MyUser extends BaseUser {
       role: role ?? this.role,
       status: status ?? this.status,
     );
+  }
+
+  static MyUser initial() {
+    return MyUser(
+        phoneNumber: "038472948",
+        uid: DateTime.now().microsecondsSinceEpoch,
+        userName: "NO USERNAME",
+        emailAddress: "NO EMAIL");
   }
 
   // MyUser copyWith({
